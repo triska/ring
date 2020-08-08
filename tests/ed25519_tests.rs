@@ -46,6 +46,10 @@ fn test_signature_ed25519() {
         let public_key = test_case.consume_bytes("PUB");
         assert_eq!(32, public_key.len());
 
+        // Test deterministic creation of key pair from seed.
+        let key_pair_from_seed = Ed25519KeyPair::seed_to_pkcs8(&seed).unwrap();
+        assert_eq!(key_pair.public_key(), public_key);
+
         let msg = test_case.consume_bytes("MESSAGE");
 
         let expected_sig = test_case.consume_bytes("SIG");
